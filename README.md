@@ -1,123 +1,135 @@
 # 🌪️ 제주도 태풍 위험도 지수 및 지수형 보험·옵션 파생상품 개발
 > **AI 기반 기상 데이터 분석을 통한 태풍 피해 예측 및 날씨 파생상품(옵션) 연계 보험 모델링**
 
+[![Python](https://img.shields.io/badge/Python-3.8%2B-blue?logo=python&logoColor=white)](https://www.python.org/)
+[![Scikit-Learn](https://img.shields.io/badge/ML-Scikit--Learn-orange?logo=scikit-learn&logoColor=white)](https://scikit-learn.org/)
+[![NumPy](https://img.shields.io/badge/Data-NumPy-013243?logo=numpy&logoColor=white)](https://numpy.org/)
+[![License](https://img.shields.io/badge/License-MIT-green)](LICENSE)
+
 ## 📝 프로젝트 개요 (Project Overview)
-기후 변화로 인해 태풍의 빈도와 강도가 증가함에 따라, 기존의 전통적 손해보험과 재보험 시스템은 손해율 악화와 갱신 불확실성이라는 한계에 직면했습니다.
-본 프로젝트는 **제주도**를 타겟으로 하여 다음 두 가지 솔루션을 제시합니다.
+기후 변화로 인해 한반도, 특히 **제주도**에 집중되는 태풍의 빈도와 강도가 증가하고 있습니다. 이로 인해 기존 손해보험 시스템은 손해율 악화와 갱신 불확실성이라는 한계에 직면했습니다.
 
-1.  **태풍 위험도 지수(Typhoon Risk Index):** 기상 데이터를 기반으로 태풍 피해 규모를 예측하는 AI 모델 개발
-2.  **금융 파생상품 연계(Weather Derivatives):** 예측된 지수를 기초자산으로 하는 콜옵션 및 지수형 보험(Parametric Insurance) 설계
+본 프로젝트는 이러한 문제를 해결하기 위해 **AI 기술과 금융 공학**을 결합한 솔루션을 제시합니다.
 
-이를 통해 농민에게는 신속한 보상을, 보험사에게는 자본시장으로의 리스크 전가(Risk Transfer) 기회를 제공합니다.
+1.  **태풍 위험도 지수 (Typhoon Risk Index):** 기상 데이터를 기반으로 태풍 피해 규모를 예측하는 AI 모델 개발
+2.  **금융 파생상품 연계 (Weather Derivatives):** 예측된 지수를 기초자산으로 하는 콜옵션 및 지수형 보험(Parametric Insurance) 설계
 
-## 👥 팀원 (Team 비룡아 안뇽)
-* **조진우, 김하경, 김승원, 최인영**
+이를 통해 **농민에게는 신속한 보상**을, **보험사에게는 자본시장으로의 리스크 전가(Risk Transfer)** 기회를 제공하고자 합니다.
+
+---
+
+## 👥 팀 소개 (Team 비룡아 안뇽)
+* **멤버:** 조진우, 김하경, 김승원, 최인영
 * **기간:** 2025.05
+* **역할:** 데이터 전처리, AI 모델링, 금융 공학(옵션 프라이싱), 성과 분석
 
 ---
 
 ## 💡 배경 및 필요성 (Background)
-* **기후 리스크 증가:** 한반도의 기온 상승폭은 지구 평균의 3배에 달하며, 제주도는 태풍 피해의 88.5%를 차지하는 등 리스크가 집중됨.
-* **전통적 보험의 한계:** 손해사정 비용 과다, 역선택 및 도덕적 해이, 거대 재해 발생 시 보험사의 지급 여력 부족 문제 발생.
-* **해결책:** 객관적인 기상 데이터를 트리거(Trigger)로 사용하는 **지수형 보험**과, 리스크를 자본시장 투자자에게 분산시키는 **날씨 파생상품(CAT Bond, Option)**의 도입 필요.
+* **🚨 기후 리스크 심화:** 한반도 기온 상승폭은 지구 평균의 3배이며, 제주도는 태풍 피해의 88.5%를 차지하는 등 리스크가 집중됨.
+* **📉 전통적 보험의 한계:** 손해사정 비용 과다, 정보 비대칭(역선택/도덕적 해이), 거대 재해 시 보험사의 지급 여력(Solvency) 부족.
+* **✅ 해결책 (Parametric Insurance):** 객관적 기상 데이터를 트리거(Trigger)로 사용하여 손해사정 절차를 생략하고, **CAT Bond(대재해 채권) 및 옵션**을 통해 리스크를 자본시장으로 분산.
 
 ---
 
 ## 🛠️ 기술적 방법론 (Methodology)
 
 ### 1. Data Analysis & AI Modeling
-제주도의 과거 태풍 피해 규모를 예측하기 위해 기상청 및 공공데이터를 활용하여 모델링을 수행했습니다.
+제주도의 과거 태풍 피해 규모를 예측하기 위해 기상청 및 공공데이터를 활용했습니다.
 
-* **데이터셋 (Data Source):**
-    * 제주특별자치도 자연재해발생현황 (1970~2023)
-    * 주요 변수(X): 중심기압, 순간최대풍속, 일최대강수량, 누적강수량 등 12개 파생 변수
-    * 타겟 변수(Y): 재산피해규모 (로그 변환 적용)
-* **모델 (Model):** **Random Forest Regressor**
-    * 선정 이유: 소규모 데이터에 대한 강건성, 변수 스케일 자동 처리, 비선형 관계 포착 유리.
-* **성능 (Performance):**
+* **데이터셋:** 1970~2023 제주특별자치도 자연재해발생현황
+* **입력 변수 (X):** 중심기압, 순간최대풍속, 일최대강수량, 누적강수량 등 12개 파생 변수
+* **타겟 변수 (Y):** 재산피해규모 (Log Transformation 적용)
+* **선정 모델:** **Random Forest Regressor**
+    * *선정 사유:* 적은 데이터 샘플에 대한 강건성, 변수 스케일 자동 처리, 비선형성 학습 유리
+* **모델 성능:**
     * $R^2$: **0.5368**
-    * RMSE: 591.98
-    * MAE: 354.55
+    * RMSE: 591.98 / MAE: 354.55
 
 ### 2. Financial Engineering (Option Pricing)
-개발된 '태풍 위험도 지수'를 기초자산으로 하는 콜옵션 가격을 산정했습니다.
+AI 모델이 산출한 '태풍 위험도 지수'를 기초자산으로 하여 **이항 트리 모델(Binomial Tree Model)**을 구축했습니다.
 
-* **가격 결정 모형:** **이항 트리 모델 (Binomial Tree Model)**
-* **주요 파라미터:**
-    * **행사가격 ($K$):** 보험사가 감당 가능한 Retention Level (자기자본 및 리스크 수용 한도 고려).
-    * **변동성 ($\sigma$):** Random Forest 모델의 예측 오차를 기반으로 산출.
-    * **리스크 중립 확률 ($p$):** 무위험 차익 거래가 없도록 설정.
-    * **기대 손실액 ($Q$):** $EL = mean(max(0, Y-K))$.
-* **구조:** 보험사가 $K$를 초과하는 손실에 대해 옵션 매수 포지션을 취하여 리스크 헷징.
+* **Valuation:** Risk-Neutral valuation (무위험 차익거래 배제)
+* **Key Parameters:**
+    * **행사가격 ($K$):** 보험사의 Retention Level (자기자본 감내 수준)
+    * **변동성 ($\sigma$):** Random Forest 예측 오차 기반 산출
+    * **기대 손실 ($Q$):** $EL = mean(max(0, Y-K))$
+* **Mechanism:** 보험사는 $K$를 초과하는 손실(Tail Risk)에 대해 옵션 매수 포지션을 취하여 헷징 수행.
 
 ### 3. Index-Based Insurance Design
-* **구조:** 선형 지급형 파라메트릭 보험 (Linear Payout Structure).
-* **트리거 설정:** 포아송 분포(Poisson Distribution) 검정을 통해 기준 지수(1.5년 주기)와 한도 지수(8년 주기) 산정.
-* **가중치:** 제주 전체 피해액 중 농업 피해 비중(약 26%) 반영.
+* **구조:** 선형 지급형 파라메트릭 보험 (Linear Payout Structure)
+* **Trigger:** 포아송 분포(Poisson) 검정을 통해 기준 지수(1.5년 주기) 및 한도 지수(8년 주기) 설정
 
 ---
 
 ## 📊 분석 결과 (Results)
 
-### 태풍 위험도 지수 시각화
-> *(여기에 프로젝트 리포트의 `Actual vs Predicted` 그래프 이미지를 삽입하세요)*
-> 2000년~2023년 태풍 피해액 예측 시뮬레이션 결과, 실제 피해 규모의 추세를 유의미하게 따라가는 것을 확인했습니다.
+### 1. 시뮬레이션 결과
+> *(Actual vs Predicted 그래프 이미지 삽입)*
+> <img src="results/figures/prediction_graph.png" width="600" alt="예측 그래프">
 
-### 보험료 및 수익성 분석
-시뮬레이션 결과, 제안된 보험 상품은 다음과 같은 기대 효과를 가집니다.
+2000년~2023년 시뮬레이션 결과, 모델이 실제 피해 규모의 추세를 유의미하게 추종함을 확인했습니다.
 
-| 구분 | 수치 | 비고 |
+### 2. 기대 효과 및 수익성
+본 모델 도입 시 예상되는 경제적 효과는 다음과 같습니다.
+
+| 구분 | 수치 | 기대 효과 |
 | :--- | :--- | :--- |
-| **손해율** | **24.20%** | 안정적인 손해율 확보 |
-| **합산비율** | 34.20% | 사업비 및 운영비 포함 |
-| **농가 혜택** | 신속 지급 | 손해사정 절차 생략으로 인한 빠른 복구 지원 |
-| **보험사 혜택** | 리스크 헷징 | 옵션 계약을 통한 거대 재해 리스크 분산 |
+| **손해율** | **24.20%** | 안정적인 손해율 관리 가능 |
+| **합산비율** | 34.20% | 사업비 및 운영비 포함 시에도 높은 수익성 |
+| **농가** | 신속 지급 | 손해사정 절차 생략으로 재해 복구 골든타임 확보 |
+| **보험사** | 리스크 헷징 | 옵션 계약을 통한 거대 재해 리스크 분산 |
 
 ---
 
 ## 💻 Tech Stack
-* **Language:** Python
-* **Data Processing:** Pandas, NumPy
-* **Machine Learning:** Scikit-learn (Random Forest)
-* **Financial Math:** Math (Binomial Tree implementation)
-* **Visualization:** Matplotlib, Seaborn
+
+| Category | Technology |
+| :--- | :--- |
+| **Language** | ![Python](https://img.shields.io/badge/Python-3776AB?style=flat&logo=python&logoColor=white) |
+| **Data Processing** | ![Pandas](https://img.shields.io/badge/Pandas-150458?style=flat&logo=pandas&logoColor=white) ![NumPy](https://img.shields.io/badge/NumPy-013243?style=flat&logo=numpy&logoColor=white) |
+| **ML / AI** | ![Scikit-Learn](https://img.shields.io/badge/Scikit_Learn-F7931E?style=flat&logo=scikit-learn&logoColor=white) |
+| **Finance** | **Binomial Tree Model (Math)** |
+| **Visualization** | ![Matplotlib](https://img.shields.io/badge/Matplotlib-ffffff?style=flat&logo=Matplotlib&logoColor=black) |
 
 ---
 
 ## 📂 Repository Structure
-├── data/                          # 데이터 저장소
-│   ├── raw/                       # 원본 데이터 (입력 파일)
+
+```bash
+├── data/
+│   ├── raw/                       # 원본 데이터
 │   │   ├── tt일시.csv             # 학습용 기상/피해 데이터 (Main)
 │   │   ├── tt.csv                 # 학습용 보조 데이터
-│   │   ├── 1234.csv               # 예측 대상 및 검증 데이터 (2010~2015)
-│   │   └── 2021~2025날씨_수정완료.csv # 시각화 및 비교용 최근 기상 데이터
+│   │   └── 1234.csv               # 예측 대상 및 검증 데이터 (2010~2015)
 │   └── output/                    # 모델 출력 데이터
-│       └── 예상피해_2010_2015.csv  # 모델이 예측하여 저장한 결과 파일
+│       └── 예상피해_2010_2015.csv  # 모델 예측 결과
 │
-├── notebooks/                     # 분석 및 모델링 작업 공간
-│   └── new.ipynb                  # [메인] 전처리, 모델링, 시뮬레이션 통합 코드
+├── notebooks/
+│   └── new.ipynb                  # [Main] 전처리, 모델링, 시뮬레이션 통합 코드
 │
-├── src/                           # (제안) 코드 모듈화 시 예상 구조
-│   ├── preprocessing.py           # 로그 변환 및 결측치 처리
-│   ├── model.py                   # RandomForest 및 TransformedTargetRegressor 설정
-│   └── simulation.py              # 몬테카를로 시뮬레이션 및 보험료(Premium) 산출 로직
+├── src/                           # (Proposed) 모듈화 구조
+│   ├── preprocessing.py           # 데이터 전처리 및 로그 변환
+│   ├── model.py                   # RandomForest 모델 설정
+│   └── simulation.py              # 몬테카를로 시뮬레이션 및 보험료 산출
 │
-├── models/                        # (제안) 학습된 모델 저장
-│   └── rf_regressor.pkl           # 학습 완료된 RandomForest 모델 파일
+├── models/
+│   └── rf_regressor.pkl           # 학습된 모델 바이너리
 │
-├── results/                       # 분석 결과물
-│   ├── figures/                   # 시각화 이미지 (예측 vs 실제 비교 그래프 등)
-│   └── metrics/                   # 성능 평가 지표 (RMSE, R2 score 등)
+├── results/
+│   ├── figures/                   # 시각화 그래프 저장
+│   └── metrics/                   # 성능 평가 지표
 │
-└── README.md                      # 프로젝트 개요 및 실행 방법
-
+└── README.md
 📚 References
 본 프로젝트는 다음 문헌 및 자료를 참고하여 수행되었습니다.
 
-제주특별자치도 자연재해발생현황 및 기상청 기상자료개방포털
+Data Source: 제주특별자치도 자연재해발생현황, 기상청 기상자료개방포털
 
-금융감독원 및 보험연구원(KIRI) 지수형 보험 관련 보고서
+Reports: 금융감독원 및 보험연구원(KIRI) 지수형 보험 관련 보고서
+
+Papers:
 
 IAIS, "Issues Paper on Index-Based Insurances"
 
-태풍 시 보험금 청구 자료를 이용한 강풍 취약도 모델링 (한국풍공학회)
+한국풍공학회, "태풍 시 보험금 청구 자료를 이용한 강풍 취약도 모델링"
